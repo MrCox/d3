@@ -85,9 +85,12 @@ d3 = function() {
     }
     return j ? m : undefined;
   };
-  d3.quantile = function(values, p) {
-    var H = (values.length - 1) * p + 1, h = Math.floor(H), v = +values[h - 1], e = H - h;
-    return e ? v + e * (values[h] - v) : v;
+  d3.quantile = function(values, p, fn) {
+    var H = (values.length - 1) * p + 1, h = Math.floor(H),
+        v = fn ? +fn(values[h - 1]) : +values[h - 1],
+        vl = fn ? +fn(values[h]) : +values[h],
+        e = H - h;
+    return e ? v + e * (vl - v) : v;
   };
   d3.median = function(array, f) {
     if (arguments.length > 1) array = array.map(f);

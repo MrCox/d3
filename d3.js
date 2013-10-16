@@ -85,10 +85,10 @@ d3 = function() {
     }
     return j ? m : undefined;
   };
-  d3.quantile = function(values, p, fn) {
+  d3.quantile = function(values, p) {
     var H = (values.length - 1) * p + 1, h = Math.floor(H),
-        v = fn ? +fn(values[h - 1]) : +values[h - 1],
-        vl = fn ? +fn(values[h]) : +values[h],
+        v = +values[h - 1],
+        vl = +values[h],
         e = H - h;
     return e ? v + e * (vl - v) : v;
   };

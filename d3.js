@@ -7499,6 +7499,7 @@ d3 = function() {
     }
     return d3_transition(subgroups, id);
   };
+  d3_transitionPrototype.s = d3_transitionPrototype.select;
   d3_transitionPrototype.selectAll = function(selector) {
     var id = this.id, subgroups = [], subgroup, subnodes, node, subnode, transition;
     selector = d3_selection_selectorAll(selector);
@@ -7517,6 +7518,7 @@ d3 = function() {
     }
     return d3_transition(subgroups, id);
   };
+  d3_transitionPrototype.sa = d3_transitionPrototype.selectAll;
   d3_transitionPrototype.filter = function(filter) {
     var subgroups = [], subgroup, group, node;
     if (typeof filter !== "function") filter = d3_selection_filter(filter);
@@ -8821,6 +8823,11 @@ d3 = function() {
     d3.selection.prototype[a] = function(_) {
       if (!arguments.length) return this.attr(a);
       return this.attr(a, _)
+    };
+    d3_transitionPrototype[a] = function(_) {
+      var attr = d3_transitionPrototype.attr;
+      if (!arguments.length) return attr(a);
+      return attr(a, _);
     };
   });
   return d3;

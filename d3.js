@@ -8809,7 +8809,7 @@ d3 = function() {
   d3.xml = d3_xhrType(function(request) {
     return request.responseXML;
   });
-  var attrs = ['d', 'dx', 'dy', 'id', 'transform', 'x', 'y', 'fill', 'stroke', 'x1', 'x2',
+  var attrs = ['d', 'dx', 'dy', 'id', 'transform', 'x', 'y', 'fill', 'stroke', 'x1', 'x2', 'opacity',
       'y1', 'y2', 'cx', 'cy', 'r', 'class', 'width', 'height', 'rx', 'ry', 'colspan', 'rotate',
       'textLength', 'text-anchor', 'value'];
 

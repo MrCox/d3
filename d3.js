@@ -8825,9 +8825,8 @@ d3 = function() {
       return this.attr(a, _)
     };
     d3_transitionPrototype[a] = function(_) {
-      var attr = d3_transitionPrototype.attr;
-      if (!arguments.length) return attr(a);
-      return attr(a, _);
+      if (!arguments.length) return this.attr(a);
+      return this.attr(a, _);
     };
   });
   return d3;

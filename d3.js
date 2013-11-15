@@ -8852,7 +8852,8 @@ d3 = function() {
           nodel   = d3.select(node), i = 0,
           coords;
       nodel.html(content)
-        .style({ opacity: 1, 'pointer-events': 'all' })
+        .style('opacity', .8)
+        .style('pointer-events', 'all');
 
       while(i--) nodel.classed(directions[i], false)
       coords = direction_callbacks.get(dir).apply(this)
@@ -8863,7 +8864,7 @@ d3 = function() {
       return tip
     };
     tip.hide = function() {
-      nodel = d3.select(node)
+      nodel = d3.select(node);
       nodel.style({ opacity: 0, 'pointer-events': 'none' })
       return tip
     }
@@ -8883,13 +8884,14 @@ d3 = function() {
       };
       return tip
     };
-
+    tip.node = function() {
+      return d3(node);
+    };
     attrs.forEach(function(_) {
-      tip[_] = function() {
-        return tip.attr.apply(d3(node), arguments);
+      tip[_] = function(n, v) {
+        return tip.attr(n, v);
       };
     });
-
     tip.direction = function(v) {
       if (!arguments.length) return direction
       direction = v == null ? v : d3.functor(v)
@@ -8993,19 +8995,6 @@ d3 = function() {
         return el
       return el.ownerSVGElement;
     };
-    // Private - gets the screen coordinates of a shape
-    //
-    // Given a shape on the screen, will return an SVGPoint for the directions
-    // n(north), s(south), e(east), w(west), ne(northeast), se(southeast), nw(northwest),
-    // sw(southwest).
-    //
-    //    +-+-+
-    //    |   |
-    //    +   +
-    //    |   |
-    //    +-+-+
-    //
-    // Returns an Object {n, s, e, w, nw, sw, ne, se}
     function getScreenBBox() {
       var target     = d3.event.target,
           bbox       = {},

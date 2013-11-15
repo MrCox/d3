@@ -8811,6 +8811,26 @@ d3 = function() {
   d3.xml = d3_xhrType(function(request) {
     return request.responseXML;
   });
+  //adding shortcuts to selection prototype
+  var attrs = ['d', 'dx', 'dy', 'id', 'transform', 'x', 'y', 'fill', 'stroke', 'x1', 'x2', 'opacity',
+      'y1', 'y2', 'cx', 'cy', 'r', 'class', 'width', 'height', 'rx', 'ry', 'colspan', 'rotate',
+      'textLength', 'text-anchor', 'value', 'stroke'];
+
+  d3.sa = function(_) {return this.selectAll(_)};
+  d3.selection.prototype.s = function(_) {return this.select(_)};
+  d3.selection.prototype.sa = function(_) {return this.selectAll(_)};
+
+  attrs.forEach(function(a, i) {
+    d3.selection.prototype[a] = function(_) {
+      if (!arguments.length) return this.attr(a);
+      return this.attr(a, _)
+    };
+    d3_transitionPrototype[a] = function(_) {
+      if (!arguments.length) return this.attr(a);
+      return this.attr(a, _);
+    };
+  });
+
   d3.tip = function() {
     var direction = d3_tip_direction,
         offset    = d3_tip_offset,
@@ -8851,8 +8871,7 @@ d3 = function() {
       if (arguments.length < 2 && typeof n === 'string') {
         return d3.select(node).attr(n)
       } else {
-        var args =  Array.prototype.slice.call(arguments)
-        d3.selection.prototype.attr.apply(d3.select(node), args)
+        d3.selection.prototype.attr.apply(d3.select(node), arguments);
       };
       return tip
     };
@@ -8860,27 +8879,30 @@ d3 = function() {
       if (arguments.length < 2 && typeof n === 'string') {
         return d3.select(node).style(n)
       } else {
-        var args =  Array.prototype.slice.call(arguments)
-        d3.selection.prototype.style.apply(d3.select(node), args)
+        d3.selection.prototype.style.apply(d3.select(node), arguments);
       };
       return tip
     };
+
+    attrs.forEach(function(_) {
+      tip[_] = function() {
+        return tip.attr.apply(d3(node), arguments);
+      };
+    });
+
     tip.direction = function(v) {
       if (!arguments.length) return direction
       direction = v == null ? v : d3.functor(v)
-
       return tip
     };
     tip.offset = function(v) {
       if (!arguments.length) return offset
       offset = v == null ? v : d3.functor(v)
-
       return tip
     };
     tip.html = function(v) {
       if (!arguments.length) return html
       html = v == null ? v : d3.functor(v)
-
       return tip
     };
     function d3_tip_direction() { return 'n' }
@@ -9019,23 +9041,5 @@ d3 = function() {
     }
     return tip;
   };
-  var attrs = ['d', 'dx', 'dy', 'id', 'transform', 'x', 'y', 'fill', 'stroke', 'x1', 'x2', 'opacity',
-      'y1', 'y2', 'cx', 'cy', 'r', 'class', 'width', 'height', 'rx', 'ry', 'colspan', 'rotate',
-      'textLength', 'text-anchor', 'value', 'stroke'];
-
-  d3.sa = function(_) {return this.selectAll(_)};
-  d3.selection.prototype.s = function(_) {return this.select(_)};
-  d3.selection.prototype.sa = function(_) {return this.selectAll(_)};
-
-  attrs.forEach(function(a, i) {
-    d3.selection.prototype[a] = function(_) {
-      if (!arguments.length) return this.attr(a);
-      return this.attr(a, _)
-    };
-    d3_transitionPrototype[a] = function(_) {
-      if (!arguments.length) return this.attr(a);
-      return this.attr(a, _);
-    };
-  });
   return d3;
 }();

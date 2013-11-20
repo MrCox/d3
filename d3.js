@@ -969,7 +969,7 @@ d3 = function() {
     return d3_transition(subgroups, id);
   };
   d3.select = function(node) {
-    if (node instanceof d3.selection) return node;
+    if (node instanceof d3.selection || node instanceof Array) return node;
     var group = [ typeof node === "string" ? d3_select(node, d3_document) : node ];
     group.parentNode = d3_documentElement;
     return d3_selection([ group ]);

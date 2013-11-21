@@ -8852,7 +8852,7 @@ d3 = function() {
           nodel   = d3.select(node), i = 0,
           coords;
       nodel.html(content)
-        .style('opacity', .8)
+        .style('opacity', .95)
         .style('pointer-events', 'all');
 
       while(i--) nodel.classed(directions[i], false)

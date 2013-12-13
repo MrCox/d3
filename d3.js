@@ -907,13 +907,7 @@ d3 = function() {
     for (var j = 0, m = this.length; j < m; j++) {
       for (var group = this[j], i = 0, n = group.length; i < n; i++) {
         var node = group[i];
-        if (!arguments.length || N == 0){
-          if (node) return node;
-        } else {
-          if (i == N){
-            if (node) return node;
-          }
-        }
+        if (!N || i == N) return node;
       }
     }
     return null;

@@ -9284,7 +9284,7 @@ d3 = function() {
   });
   //adding shortcuts to selection prototype
   var attrs = ['d', 'dx', 'dy', 'id', 'transform', 'x', 'y', 'fill', 'stroke', 'x1', 'x2', 'opacity',
-      'y1', 'y2', 'cx', 'cy', 'r', 'class', 'width', 'height', 'rx', 'ry', 'colspan', 'rotate',
+      'y1', 'y2', 'cx', 'cy', 'r', 'class', 'width', 'height', 'rx', 'ry', 'colspan', 'rotate','href',
       'textLength', 'text-anchor', 'value', 'stroke'];
 
   d3.selection.attrs = d3.functor(attrs);

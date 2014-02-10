@@ -74,9 +74,9 @@ suite.addBatch({
       },
       "can specify range values as arrays or objects": function(d3) {
         var x = d3.scale.pow().range([{color: "red"}, {color: "blue"}]);
-        assert.deepEqual(x(.5), {color: d3.rgb(128, 0, 128)});
+        assert.deepEqual(x(.5), {color: "#800080"});
         var x = d3.scale.pow().range([["red"], ["blue"]]);
-        assert.deepEqual(x(.5), [d3.rgb(128, 0, 128)]);
+        assert.deepEqual(x(.5), ["#800080"]);
       }
     },
 
@@ -120,11 +120,11 @@ suite.addBatch({
       "defaults to d3.interpolate": function(d3) {
         var x = d3.scale.pow().range(["red", "blue"]);
         assert.equal(x.interpolate(), d3.interpolate);
-        assert.rgbEqual(x(.5), 128, 0, 128);
+        assert.equal(x(.5), "#800080");
       },
       "can specify a custom interpolator": function(d3) {
         var x = d3.scale.pow().range(["red", "blue"]).interpolate(d3.interpolateHsl);
-        assert.hslEqual(x(.5), -60, 1, .5);
+        assert.equal(x(.5), "#ff00ff");
       }
     },
 
@@ -168,6 +168,16 @@ suite.addBatch({
         assert.deepEqual(x.ticks(2).map(x.tickFormat(2)), [0, .5, 1]);
         assert.deepEqual(x.ticks(5).map(x.tickFormat(5)), [0, .2, .4, .6, .8, 1]);
         assert.deepEqual(x.ticks(10).map(x.tickFormat(10)), [0, .1, .2, .3, .4, .5, .6, .7, .8, .9, 1]);
+      }
+    },
+
+    "tickFormat": {
+      "if count is not specified, defaults to 10": function(d3) {
+        var x = d3.scale.pow();
+        assert.strictEqual(x.tickFormat()(Math.PI), "3.1");
+        assert.strictEqual(x.tickFormat(1)(Math.PI), "3");
+        assert.strictEqual(x.tickFormat(10)(Math.PI), "3.1");
+        assert.strictEqual(x.tickFormat(100)(Math.PI), "3.14");
       }
     },
 

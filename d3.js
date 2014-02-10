@@ -7931,7 +7931,6 @@ d3 = function() {
     }
     return d3_transition(subgroups, id);
   };
-  d3_transitionPrototype.s = d3_transitionPrototype.select;
   d3_transitionPrototype.selectAll = function(selector) {
     var id = this.id, subgroups = [], subgroup, subnodes, node, subnode, transition;
     selector = d3_selection_selectorAll(selector);
@@ -7950,7 +7949,6 @@ d3 = function() {
     }
     return d3_transition(subgroups, id);
   };
-  d3_transitionPrototype.sa = d3_transitionPrototype.selectAll;
   d3_transitionPrototype.filter = function(filter) {
     var subgroups = [], subgroup, group, node;
     if (typeof filter !== "function") filter = d3_selection_filter(filter);
@@ -9270,7 +9268,7 @@ d3 = function() {
   };
   function d3_json(request) {
     return JSON.parse(request.responseText);
-  }
+  };
   d3.html = function(url, callback) {
     return d3_xhr(url, "text/html", d3_html, callback);
   };
@@ -9278,19 +9276,22 @@ d3 = function() {
     var range = d3_document.createRange();
     range.selectNode(d3_document.body);
     return range.createContextualFragment(request.responseText);
-  }
+  };
   d3.xml = d3_xhrType(function(request) {
     return request.responseXML;
   });
   //adding shortcuts to selection prototype
   var attrs = ['d', 'dx', 'dy', 'id', 'transform', 'x', 'y', 'fill', 'stroke', 'x1', 'x2', 'opacity',
       'y1', 'y2', 'cx', 'cy', 'r', 'class', 'width', 'height', 'rx', 'ry', 'colspan', 'rotate','href',
-      'textLength', 'text-anchor', 'value', 'stroke'];
+      'textLength', 'value', 'stroke'];
 
   d3.selection.attrs = d3.functor(attrs);
   d3.sa = function(_) {return this.selectAll(_)};
   d3.selection.prototype.s = function(_) {return this.select(_)};
   d3.selection.prototype.sa = function(_) {return this.selectAll(_)};
+
+  d3_transitionPrototype.s = d3_transitionPrototype.select;
+  d3_transitionPrototype.sa = d3_transitionPrototype.selectAll;
 
   attrs.forEach(function(a, i) {
     d3.selection.prototype[a] = function(_) {
